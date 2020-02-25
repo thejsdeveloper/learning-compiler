@@ -11,6 +11,7 @@ export class Interpreter {
 
 
   expr() {
+    debugger
     let result = this.factor();
 
     while( 
