@@ -14,13 +14,12 @@ export class Interpreter {
     let result = this.factor();
 
     while( 
-      this.currentToken.tokenType !== TOKEN_TYPE.EOF && 
       ( this.currentToken.tokenType === TOKEN_TYPE.MUL ||
       this.currentToken.tokenType === TOKEN_TYPE.DIV )
       ) {
         const token = this.currentToken;
 
-        if (token.tokenType === TOKEN_TYPE.MINUS) {
+        if (token.tokenType === TOKEN_TYPE.MUL) {
           this.eat(TOKEN_TYPE.MUL);
           result = result * this.factor();
         }

@@ -4,18 +4,16 @@ import { isDigit } from '../parser-part-3';
 export class Lexer {
   text: string;
   currentChar: string;
-  currentToken: Token;
   pos: number;
 
   constructor(str: string) {
     this.text = str;
     this.pos = 0;
     this.currentChar = this.text.charAt(this.pos);
-    this.currentToken = null;
   }
 
   advance() {
-    this.pos++;
+    this.pos += 1;
     if (this.pos < this.text.length) {
       this.currentChar = this.text.charAt(this.pos);
     } else {
