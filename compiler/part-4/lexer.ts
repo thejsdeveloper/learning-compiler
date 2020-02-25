@@ -28,7 +28,7 @@ export class Lexer {
   }
 
   getNextToken(): Token {
-    debugger;
+  
     while (this.currentChar !== null) {
       if (this.currentChar === " ") {
         this.skipWhiteSpace();
