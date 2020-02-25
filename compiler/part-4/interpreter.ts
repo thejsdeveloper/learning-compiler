@@ -44,8 +44,9 @@ export class Interpreter {
 
     if (token.tokenType === tokenType) {
       this.currentToken = this.lexer.getNextToken();
+    }  else {
+      throw new Error('Error while parsing');
     }
 
-    throw new Error('Error while parsing');
   }
 }
