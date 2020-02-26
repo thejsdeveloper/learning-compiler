@@ -25,7 +25,6 @@ export class Interpreter {
         this.eat(TOKEN_TYPE.MINUS);
         result = result - this.factor();
       }
-
     }
 
     return result;
