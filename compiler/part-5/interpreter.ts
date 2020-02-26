@@ -7,12 +7,28 @@ export class Interpreter {
     this.currentToken = this.lexer.getNextToken();
   }
 
+  eat(tokenType: TOKEN_TYPE) {
+    const token = this.currentToken;
+    if (token.tokenType === tokenType) {
+      this.currentToken = this.lexer.getNextToken();
+    } else {
+      throw new Error("Error while parsing");
+    }
+  }
+
+  factor(): number {
+    const token = this.currentToken;
+    this.eat(TOKEN_TYPE.INTEGER);
+    return parseFloat(token.value);
+  }
+
   term(): number {
     let result = this.factor();
 
     while (
-      this.currentToken.tokenType === TOKEN_TYPE.PLUS ||
-      this.currentToken.tokenType === TOKEN_TYPE.MINUS
+      this.currentToken.tokenType === TOKEN_TYPE.MUL ||
+      this.currentToken.tokenType === TOKEN_TYPE.DIV
+      
     ) {
       const token = this.currentToken;
 
@@ -31,11 +47,11 @@ export class Interpreter {
   }
 
   expr() {
-    let result = this.factor();
+    let result = this.term();
 
     while (
-      this.currentToken.tokenType === TOKEN_TYPE.MUL ||
-      this.currentToken.tokenType === TOKEN_TYPE.DIV
+      this.currentToken.tokenType === TOKEN_TYPE.PLUS ||
+      this.currentToken.tokenType === TOKEN_TYPE.MINUS
     ) {
       const token = this.currentToken;
 
@@ -50,20 +66,5 @@ export class Interpreter {
       }
     }
     return result;
-  }
-
-  factor(): number {
-    const token = this.currentToken;
-    this.eat(TOKEN_TYPE.INTEGER);
-    return parseFloat(token.value);
-  }
-
-  eat(tokenType: TOKEN_TYPE) {
-    const token = this.currentToken;
-    if (token.tokenType === tokenType) {
-      this.currentToken = this.lexer.getNextToken();
-    } else {
-      throw new Error("Error while parsing");
-    }
   }
 }

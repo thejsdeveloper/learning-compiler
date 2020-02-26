@@ -5,8 +5,8 @@ import './style.css';
 // import {Interpreter} from './simple-add-parser';
 
 
-import { Lexer } from './compiler/part-4/lexer';
-import { Interpreter } from './compiler/part-4/interpreter';
+import { Lexer } from './compiler/lexer';
+import { Interpreter } from './compiler/part-5/interpreter';
 // Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
 appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
