@@ -1,5 +1,6 @@
-import { Lexer } from "../lexer";
+
 import { Token, TOKEN_TYPE } from "../model/token";
+import { Lexer } from "../lexer";
 
 export class Interpreter {
   currentToken: Token;
@@ -12,8 +13,6 @@ export class Interpreter {
     let result = this.factor();
 
     while (
-      this.currentToken.tokenType === TOKEN_TYPE.PLUS ||
-      this.currentToken.tokenType === TOKEN_TYPE.MINUS ||
       this.currentToken.tokenType === TOKEN_TYPE.MUL ||
       this.currentToken.tokenType === TOKEN_TYPE.DIV
     ) {
