@@ -33,12 +33,12 @@ export class Interpreter {
       const token = this.currentToken;
       if (token.tokenType === TOKEN_TYPE.MUL) {
         this.eat(TOKEN_TYPE.MUL);
-        result = result * this.term();
+        result = result * this.factor();
       }
 
       if (token.tokenType === TOKEN_TYPE.DIV) {
         this.eat(TOKEN_TYPE.DIV);
-        result = result / this.term();
+        result = result / this.factor();
       }
 
     }
@@ -56,12 +56,12 @@ export class Interpreter {
       const token = this.currentToken;
       if (token.tokenType === TOKEN_TYPE.PLUS) {
         this.eat(TOKEN_TYPE.PLUS);
-        result = result + this.factor();
+        result = result + this.term();
       }
 
       if (token.tokenType === TOKEN_TYPE.MINUS) {
         this.eat(TOKEN_TYPE.MINUS);
-        result = result - this.factor();
+        result = result - this.term();
       }
 
     }
