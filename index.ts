@@ -16,7 +16,7 @@ let str = '14 + 2 * 3 - 6 / 2';
 const lex = new Lexer(str);
 
 const intr = new Interpreter(lex);
-// const res = intr.expr();
-//console.log(res);
+const res = intr.expr();
+console.log(res);
 
 
