@@ -7,15 +7,12 @@ export class Interpreter {
     this.currentToken = this.lexer.getNextToken();
   }
 
-  expr() {
-    debugger;
+  term(): number {
     let result = this.factor();
 
     while (
       this.currentToken.tokenType === TOKEN_TYPE.PLUS ||
-      this.currentToken.tokenType === TOKEN_TYPE.MINUS ||
-      this.currentToken.tokenType === TOKEN_TYPE.MUL ||
-      this.currentToken.tokenType === TOKEN_TYPE.DIV
+      this.currentToken.tokenType === TOKEN_TYPE.MINUS
     ) {
       const token = this.currentToken;
 
@@ -26,16 +23,31 @@ export class Interpreter {
 
       if (token.tokenType === TOKEN_TYPE.MINUS) {
         this.eat(TOKEN_TYPE.MINUS);
-        result = result  - this.factor();
+        result = result - this.factor();
       }
+
+    }
+
+    return result;
+  }
+
+  expr() {
+    let result = this.factor();
+
+    while (
+      this.currentToken.tokenType === TOKEN_TYPE.MUL ||
+      this.currentToken.tokenType === TOKEN_TYPE.DIV
+    ) {
+      const token = this.currentToken;
+
       if (token.tokenType === TOKEN_TYPE.MUL) {
         this.eat(TOKEN_TYPE.MUL);
-        result = result * this.factor();
+        result = result * this.term();
       }
 
       if (token.tokenType === TOKEN_TYPE.DIV) {
         this.eat(TOKEN_TYPE.DIV);
-        result = result / this.factor();
+        result = result / this.term();
       }
     }
     return result;
@@ -49,7 +61,6 @@ export class Interpreter {
 
   eat(tokenType: TOKEN_TYPE) {
     const token = this.currentToken;
-
     if (token.tokenType === tokenType) {
       this.currentToken = this.lexer.getNextToken();
     } else {

@@ -1,5 +1,5 @@
-import { Token, TOKEN_TYPE } from "../model/token";
-import { isDigit } from "../parser-part-3";
+import { Token, TOKEN_TYPE } from "../compiler/model/token";
+import { isDigit } from "../compiler/utility/utility";
 
 export class Lexer {
   text: string;
