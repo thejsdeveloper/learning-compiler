@@ -4,7 +4,9 @@ export enum TOKEN_TYPE {
   "MINUS" = "MINUS",
   "MUL" = "MUL",
   "DIV" = "DIV",
-  "EOF" = "EOF"
+  "EOF" = "EOF",
+  'LPREN' = 'LPREN',
+  'RPREN' = 'RPREN'
 }
 
 export class Token {
