@@ -9,7 +9,7 @@ export class Lexer {
   }
 
   advance() {
-    if (this.pos < this.text.length) {
+    if (this.pos < this.text.length - 1) {
       this.pos++;
       this.currentChar = this.text.charAt(this.pos);
     } else {
@@ -24,6 +24,7 @@ export class Lexer {
   }
 
   getNextToken(): Token {
+
     while (this.currentChar !== null) {
       if (this.currentChar === " ") {
         this.skipWhiteSpace();

@@ -18,11 +18,11 @@ export class Parser {
   }
 
   factor(): AST {
-
-    if (this.currentToken.tokenType === TOKEN_TYPE.INTEGER) {
+    const token = this.currentToken;
+    if (token.tokenType === TOKEN_TYPE.INTEGER) {
       this.eat(TOKEN_TYPE.INTEGER);
-      return new Num(this.currentToken);
-    } else if (this.currentToken.tokenType === TOKEN_TYPE.LPREN) {
+      return new Num(token);
+    } else if (token.tokenType === TOKEN_TYPE.LPREN) {
       this.eat(TOKEN_TYPE.LPREN);
       const node = this.expr();
       this.eat(TOKEN_TYPE.RPREN);
@@ -34,7 +34,7 @@ export class Parser {
 
   term(): AST {
     let node = this.factor();
-
+ 
     while (
       this.currentToken.tokenType === TOKEN_TYPE.MUL ||
       this.currentToken.tokenType === TOKEN_TYPE.DIV
@@ -44,7 +44,7 @@ export class Parser {
         this.eat(TOKEN_TYPE.MUL);
       }
 
-      if (token.tokenType === TOKEN_TYPE.MUL) {
+      if (token.tokenType === TOKEN_TYPE.DIV) {
         const token = this.currentToken;
         this.eat(TOKEN_TYPE.DIV);
       }

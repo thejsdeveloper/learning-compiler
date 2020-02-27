@@ -6,7 +6,7 @@ import './style.css';
 
 
 // import { Lexer } from './compiler/lexer';
-import { Interpreter } from './compiler/part-5/interpreter';
+// import { Interpreter } from './compiler/part-5/interpreter';
 import { Lexer } from './compiler/part-6/lexer';
 import { Parser } from './compiler/part-6/parser';
 // Write TypeScript code!
@@ -31,7 +31,7 @@ const parser = new Parser(lex7);
 
 const ast = parser.parse();
 
-console.log('AST >>>>>', ast)
+console.table('AST >>>>>', ast)
 
 
 
