@@ -3,14 +3,14 @@ import { TOKEN_TYPE, Token } from "./token";
 
 
 export class BinaryOp extends AST {
-  constructor(private left: AST, private token: Token, private right: AST) {
+  constructor(public left: BinaryOp, public token: Token, public right: BinaryOp) {
     super();
   }
 }
 
 export class Num extends AST {
   value: string;
-  constructor(private token: Token){
+  constructor(public token: Token){
     super();
     this.value = this.token.value;
   }

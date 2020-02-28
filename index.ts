@@ -9,6 +9,8 @@ import './style.css';
 // import { Interpreter } from './compiler/part-5/interpreter';
 import { Lexer } from './compiler/part-6/lexer';
 import { Parser } from './compiler/part-6/parser';
+import { Tree } from './tree/tree';
+import { BinaryOp } from './compiler/model/binaryOperation';
 // Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
 appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
@@ -33,7 +35,13 @@ const ast = parser.parse();
 
 console.table('AST >>>>>', ast)
 
-console.log(JSON.stringify(ast))
+console.log('>>>>>>>>TREE DATA >>>>>>>>');
+
+const tree = new Tree();
+
+const treeData = tree.getHierarchy(ast as BinaryOp);
+
+console.log(treeData);
 
 
 
