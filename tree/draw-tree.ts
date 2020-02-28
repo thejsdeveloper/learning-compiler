@@ -20,10 +20,10 @@ export class DrawTree {
     .attr("width", this.width)
     .append("g")
     .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
-    
-  root = {};
+
+  root: d3.HierarchyNode<any>;
   constructor(private data: any) {
-   this.root = d3.hierarchy(this.data);
+    this.root = d3.hierarchy(this.data);
   }
 
   draw() {
@@ -32,7 +32,7 @@ export class DrawTree {
   }
 
   private update(source) {
-    
+
     const duration = d3.event && d3.event.altKey ? 2500 : 250;
     const tree = d3.tree().size([this.treeWidth, this.treeHeight]);
 
@@ -40,14 +40,60 @@ export class DrawTree {
       .duration(duration)
 
 
-    
+
     tree(this.root);
 
     const links = this.root.descendants().slice(1);
     const line = d3.line().curve(d3.curveBasis);
 
-    this.svg
+    const node = this.svg
+      .selectAll(".node");
+
+    const nodeEnter = node
+      .data(this.root.descendants())
+      .enter()
+      .append("g")
+      .attr("class", "node")
+
+    nodeEnter
+      .append("circle")
+      .attr("r", 20)
+      .attr("fill", "#fff")
+      .attr("stroke", "lightblue")
+      .attr("cx", (d: any) => d.x)
+      .attr("cy", (d: any) => d.y)
+      .on("click", (d: any) => {
+        console.log(d);
+        d.children = d.children ? null : d._children;
+        this.update(d)
+      });
+
+
+    nodeEnter
+      .append('text')
+      .attr('x', (d: any) => d._chidren ? -6 : 6)
+      .attr('dy', '0.31em')
+      .attr("text-anchor", (d: any) => d._children ? "end" : "start")
+      .text(d => d.data.name);
+
+    const nodeUpdate = node.merge(nodeEnter)
+      .transition(transition)
+      .attr("transform", (d: any) => `translate(${d.y},${d.x})`)
+      .attr("fill-opacity", 1)
+      .attr("stroke-opacity", 1);
+
+    const nodeExit = node.exit()
+      .transition(transition)
+      .remove()
+      .attr("transform", (d: any) => `translate(${source.y},${source.x})`)
+      .attr("fill-opacity", 0)
+      .attr("stroke-opacity", 0);
+
+
+    const link = this.svg
       .selectAll(".link")
+
+    const linkEnter = link
       .data(links)
       .enter()
       .append("path")
@@ -62,23 +108,11 @@ export class DrawTree {
         ]);
       });
 
-    const nodeEnter = this.svg
-      .selectAll(".node")
-      .data(this.root.descendants())
-      .enter()
-      .append("g")
-      .attr("class", "node")
-      .append("circle")
-      .attr("r", 20)
-      .attr("fill", "#fff")
-      .attr("stroke", "lightblue")
-      .attr("cx", (d: any) => d.x)
-      .attr("cy", (d: any) => d.y)
-      .on("click", (d: any) => {
-        console.log(d);
-        d.children = d.children ? null : d._children;
-        this.update(d)
-      });
+
+    link.merge(linkEnter).transition(transition);
+
+    link.exit().transition(transition)
+
   }
-    
+
 }
