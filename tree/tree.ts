@@ -22,8 +22,8 @@ export class Tree {
     }
     
     return {
-      name: currentNodeName,
-      id: id,
+      name: id,
+      nodeName: currentNodeName,
       parent: parent,
       children: childern
     }
