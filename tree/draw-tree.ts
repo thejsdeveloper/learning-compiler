@@ -30,7 +30,7 @@ export class DrawTree {
   }
 
   draw() {
-    this.root.descendants().forEach((d, i) => {
+    this.root.descendants().forEach((d: any, i) => {
       d._children = d.children;
     });
     this.update(this.root);
