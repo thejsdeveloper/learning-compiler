@@ -14,7 +14,8 @@ export class DrawTree {
   treeHeight = 500 - this.margin.top - this.margin.bottom;
 
   duration = 750;
-  svg = d3.select(".tree-container")
+  svg = d3
+    .select(".tree-container")
     .append("svg")
     .attr("height", this.height)
     .attr("width", this.width)
@@ -23,58 +24,70 @@ export class DrawTree {
 
   root: d3.HierarchyNode<any>;
   constructor(private data: any) {
+    const tree = d3.tree().size([this.treeWidth, this.treeHeight]);
     this.root = d3.hierarchy(this.data);
+    tree(this.root);
   }
 
   draw() {
-
+    this.root.descendants().forEach((d, i) => {
+      d._children = d.children;
+    });
     this.update(this.root);
   }
 
+  diagonal(d) {
+    const line = d3.line().curve(d3.curveBasis);
+    return line([
+      [d.x, d.y],
+      [d.x, (d.y + d.parent.y) / 2],
+      [d.parent.x, (d.y + d.parent.y) / 2],
+      [d.parent.x, d.parent.y]
+    ]);
+  }
+
   private update(source) {
+    const duration = 2500;
 
-    const duration = d3.event && d3.event.altKey ? 2500 : 250;
-    const tree = d3.tree().size([this.treeWidth, this.treeHeight]);
-
-    const transition = this.svg.transition()
-      .duration(duration)
-
-
-
-    tree(this.root);
+    const transition = this.svg.transition().duration(duration);
 
     const links = this.root.descendants().slice(1);
-    const line = d3.line().curve(d3.curveBasis);
-    const link = this.svg
-      .selectAll(".link")
+
+    const link = this.svg.selectAll(".link");
 
     const linkEnter = link
       .data(links)
       .enter()
       .append("path")
+      .attr("class", "link")
       .attr("fill", "none")
       .attr("stroke", "lightblue")
       .attr("d", (d: any) => {
-        return line([
-          [d.x, d.y],
-          [d.x, (d.y + d.parent.y) / 2],
-          [d.parent.x, (d.y + d.parent.y) / 2],
-          [d.parent.x, d.parent.y]
-        ]);
+        console.log({ x: source.x, y: source.y });
+        return this.diagonal({ x: source.x, y: source.y });
       });
 
+    link
+      .merge(linkEnter)
+      .transition(transition)
+      .attr("d", this.diagonal);
 
-    link.merge(linkEnter).transition(transition);
+    link
+      .exit()
+      .transition(transition)
+      .remove()
+      .attr("d", d => {
+        const o = { x: source.x, y: source.y };
+        return this.diagonal({ source: o, target: o });
+      });
 
-    link.exit().transition(transition)
-    const node = this.svg
-      .selectAll(".node");
+    const node = this.svg.selectAll(".node");
 
     const nodeEnter = node
       .data(this.root.descendants())
       .enter()
       .append("g")
-      .attr("class", "node")
+      .attr("class", "node");
 
     nodeEnter
       .append("circle")
@@ -86,33 +99,29 @@ export class DrawTree {
       .on("click", (d: any) => {
         console.log(d);
         d.children = d.children ? null : d._children;
-        this.update(d)
+        this.update(d);
       });
 
-
     nodeEnter
-      .append('text')
-      .attr('x', (d: any) => d.x + 20)
-      .attr('y', (d: any) => d.y)
+      .append("text")
+      .attr("x", (d: any) => d.x + 30)
+      .attr("y", (d: any) => d.y + 10)
       // .attr("text-anchor", (d: any) => d._children ? "end" : "start")
       .text(d => d.data.name);
 
-    const nodeUpdate = node.merge(nodeEnter)
+    const nodeUpdate = node
+      .merge(nodeEnter)
       .transition(transition)
-      .attr("transform", (d: any) => `translate(${d.y},${d.x})`)
+      .attr("transform", (d: any) => `translate(${d.x},${d.y})`)
       .attr("fill-opacity", 1)
       .attr("stroke-opacity", 1);
 
-    const nodeExit = node.exit()
+    const nodeExit = node
+      .exit()
       .transition(transition)
       .remove()
-      .attr("transform", (d: any) => `translate(${source.y},${source.x})`)
+      .attr("transform", (d: any) => `translate(${source.x},${source.y})`)
       .attr("fill-opacity", 0)
       .attr("stroke-opacity", 0);
-
-
-
-
   }
-
 }
