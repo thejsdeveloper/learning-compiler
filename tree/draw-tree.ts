@@ -45,7 +45,28 @@ export class DrawTree {
 
     const links = this.root.descendants().slice(1);
     const line = d3.line().curve(d3.curveBasis);
+    const link = this.svg
+      .selectAll(".link")
 
+    const linkEnter = link
+      .data(links)
+      .enter()
+      .append("path")
+      .attr("fill", "none")
+      .attr("stroke", "lightblue")
+      .attr("d", (d: any) => {
+        return line([
+          [d.x, d.y],
+          [d.x, (d.y + d.parent.y) / 2],
+          [d.parent.x, (d.y + d.parent.y) / 2],
+          [d.parent.x, d.parent.y]
+        ]);
+      });
+
+
+    link.merge(linkEnter).transition(transition);
+
+    link.exit().transition(transition)
     const node = this.svg
       .selectAll(".node");
 
@@ -91,28 +112,7 @@ export class DrawTree {
       .attr("stroke-opacity", 0);
 
 
-    const link = this.svg
-      .selectAll(".link")
 
-    const linkEnter = link
-      .data(links)
-      .enter()
-      .append("path")
-      .attr("fill", "none")
-      .attr("stroke", "lightblue")
-      .attr("d", (d: any) => {
-        return line([
-          [d.x, d.y],
-          [d.x, (d.y + d.parent.y) / 2],
-          [d.parent.x, (d.y + d.parent.y) / 2],
-          [d.parent.x, d.parent.y]
-        ]);
-      });
-
-
-    link.merge(linkEnter).transition(transition);
-
-    link.exit().transition(transition)
 
   }
 
