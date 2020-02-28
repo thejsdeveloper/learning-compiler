@@ -23,7 +23,10 @@ export class DrawTree {
 
   draw() {
     const tree = d3.tree().size([this.treeWidth, this.treeHeight]);
-    const root = tree(this.data);
+    const stratify = d3.stratify()
+      .parentId((d: any) => d.parentId)
+      .id((d: any) => d.name)
+    const root = stratify(this.data);
     const links = root.descendants().slice(1);
     const line = d3.line().curve(d3.curveBasis);
 
@@ -54,15 +57,15 @@ export class DrawTree {
     const nodes = svg.selectAll('.node')
       .data(root.descendants())
       .enter()
-        .append('circle')
-        .attr('r', 4.5)
-        .attr('fill', '#fff')
-        .attr('class', 'node')
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y);
+      .append('circle')
+      .attr('r', 4.5)
+      .attr('fill', '#fff')
+      .attr('class', 'node')
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y);
 
 
-    
+
   }
 
 
