@@ -11,6 +11,7 @@ import { Lexer } from './compiler/part-6/lexer';
 import { Parser } from './compiler/part-6/parser';
 import { Tree } from './tree/tree';
 import { BinaryOp } from './compiler/model/binaryOperation';
+import { DrawTree } from './tree/draw-tree';
 // Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
 appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
@@ -42,6 +43,9 @@ const tree = new Tree();
 const treeData = tree.getHierarchy(ast as BinaryOp);
 
 console.log(treeData);
+
+const drawTree = new DrawTree(treeData);
+drawTree.draw();
 
 
 
