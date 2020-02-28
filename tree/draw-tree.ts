@@ -25,11 +25,7 @@ export class DrawTree {
     const tree = d3.tree().size([this.treeWidth, this.treeHeight]);
 
 
-    // const stratifiedData = d3.stratify()
-    // .id(d => d.name)
-    // .parentId(d => d.parent)(console.log)
-
-
+    
     let root = d3.hierarchy(this.data);
     console.log("TCL: DrawTree -> draw -> nodes", root)
     

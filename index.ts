@@ -42,7 +42,7 @@ const tree = new Tree();
 
 const treeData = tree.getHierarchy(ast as BinaryOp);
 
-console.log(treeData);
+console.log(JSON.stringify(treeData));
 
 const drawTree = new DrawTree(treeData);
 drawTree.draw();

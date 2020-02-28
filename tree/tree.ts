@@ -10,7 +10,7 @@ export class Tree {
 
     const childern = [];
     const currentNodeName = data.token.value;
-    const id = shortid();
+    const id = shortid.generate();
     if (!!data.left) {
       const left = this.getHierarchy(data.left, id);
       childern.push(left)
@@ -25,7 +25,7 @@ export class Tree {
       name: currentNodeName,
       id: id,
       parent: parent,
-      childern: childern
+      children: childern
     }
   }
 
