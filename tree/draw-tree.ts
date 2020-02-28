@@ -92,8 +92,8 @@ export class DrawTree {
 
     nodeEnter
       .append('text')
-      .attr('x', (d: any) => d.x / 2)
-      .attr('y', (d: any) => d.y / 2)
+      .attr('x', (d: any) => d.x + 20)
+      .attr('y', (d: any) => d.y)
       // .attr("text-anchor", (d: any) => d._children ? "end" : "start")
       .text(d => d.data.name);
 
