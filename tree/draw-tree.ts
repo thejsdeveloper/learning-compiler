@@ -37,13 +37,17 @@ export class DrawTree {
   }
 
   diagonal(d) {
-    const line = d3.line().curve(d3.curveBasis);
-    return line([
-      [d.x, d.y],
-      [d.x, (d.y + d.parent.y) / 2],
-      [d.parent.x, (d.y + d.parent.y) / 2],
-      [d.parent.x, d.parent.y]
-    ]);
+    // const line = d3.line().curve(d3.curveBasis);
+    // return line([
+    //   [d.x, d.y],
+    //   [d.x, (d.y + d.parent.y) / 2],
+    //   [d.parent.x, (d.y + d.parent.y) / 2],
+    //   [d.parent.x, d.parent.y]
+    // ]);
+
+    return d3.linkVertical()
+    .x((d: any) => d.x)
+    .y((d: any) => d.y)
   }
 
   private update(source) {
