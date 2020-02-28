@@ -33,5 +33,7 @@ const ast = parser.parse();
 
 console.table('AST >>>>>', ast)
 
+console.log(JSON.stringify(ast))
+
 
 
