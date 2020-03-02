@@ -83,12 +83,12 @@ export class DrawTree {
     //.attr("cx", (d: any) => d.x)
     // .attr("cy", (d: any) => d.y);
 
-    // nodeEnter
-    //   .append("text")
-    //   .attr("x", (d: any) => d.x + 30)
-    //   .attr("y", (d: any) => d.y + 10)
-    //   // .attr("text-anchor", (d: any) => d._children ? "end" : "start")
-    //   .text(d => d.data.name);
+    nodeEnter
+      .append("text")
+      .attr("x", (d: any) => d.x + 30)
+      .attr("y", (d: any) => d.y + 10)
+      // .attr("text-anchor", (d: any) => d._children ? "end" : "start")
+      .text(d => d.data.nodeName);
 
     const nodeUpdate = node
       .merge(nodeEnter)
