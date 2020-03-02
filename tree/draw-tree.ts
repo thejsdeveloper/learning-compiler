@@ -63,7 +63,7 @@ export class DrawTree {
       .append("g")
       .attr("class", "node")
       .attr("transform", d => {
-        debugger;
+   
         console.log(source);
         return `translate(${source.x0}, ${source.y0})`;
       })
