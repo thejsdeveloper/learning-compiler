@@ -42,7 +42,7 @@ const result = interpreter.interpret();
 
 console.log(`Result of expression : ${result} `)
 
-let res1 = assert(result, 17)
+
 
 
 
