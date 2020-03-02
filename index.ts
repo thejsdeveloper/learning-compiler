@@ -36,16 +36,16 @@ const ast = parser.parse();
 
 console.table('AST >>>>>', ast)
 
-console.log('>>>>>>>>TREE DATA >>>>>>>>');
+// console.log('>>>>>>>>TREE DATA >>>>>>>>');
 
-const tree = new Tree();
+// const tree = new Tree();
 
-const treeData = tree.getHierarchy(ast as BinaryOp);
+// const treeData = tree.getHierarchy(ast as BinaryOp);
 
-// console.log(JSON.stringify(treeData));
+// // console.log(JSON.stringify(treeData));
 
-const drawTree = new DrawTree(treeData);
-drawTree.draw();
+// const drawTree = new DrawTree(treeData);
+// drawTree.draw();
 
 
 
