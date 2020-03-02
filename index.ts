@@ -18,7 +18,7 @@ const appDiv: HTMLElement = document.getElementById('app');
 appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
 
 
-let str = '14 + 2 * 3 - 6 / 2';
+let str = '14 + 2 * (3 - 6) / 2';
 // const lex = new Lexer(str);
 
 // const intr = new Interpreter(lex);
@@ -41,6 +41,8 @@ const interpreter = new Interpreter(parser);
 const result = interpreter.interpret();
 
 console.log(`Result of expression : ${result} `)
+
+let res1 = assert(result, 17)
 
 
 
