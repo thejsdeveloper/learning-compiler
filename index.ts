@@ -12,6 +12,7 @@ import { Parser } from './compiler/part-6/parser';
 import { Tree } from './tree/tree';
 import { BinaryOp } from './compiler/model/binaryOperation';
 import { DrawTree } from './tree/draw-tree';
+import { Interpreter } from './compiler/part-6/interpretor';
 // Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
 appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
@@ -32,9 +33,17 @@ const lex7 = new Lexer(str);
 
 const parser = new Parser(lex7);
 
-const ast = parser.parse();
+// const ast = parser.parse();
 
-console.table('AST >>>>>', ast)
+// console.table('AST >>>>>', ast)
+
+const interpreter = new Interpreter(parser);
+const result = interpreter.interpret();
+
+console.log(`Result of expression : ${result} `)
+
+
+
 
 // console.log('>>>>>>>>TREE DATA >>>>>>>>');
 
