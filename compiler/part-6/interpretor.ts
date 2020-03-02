@@ -9,7 +9,7 @@ export class Interpreter extends NodeVisitor {
         super();
     }
 
-    visit_BinOp(node: BinaryOp) {
+    visit_BinaryOp(node: BinaryOp) {
         if (node.token.tokenType === TOKEN_TYPE.PLUS) {
             return this.visit(node.left) + this.visit(node.right)
         } else if (node.token.tokenType === TOKEN_TYPE.MINUS) {

@@ -9,9 +9,9 @@ export class BinaryOp extends AST {
 }
 
 export class Num extends AST {
-  value: string;
+  value: number;
   constructor(public token: Token){
     super();
-    this.value = this.token.value;
+    this.value = parseFloat(this.token.value);
   }
 }
