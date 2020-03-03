@@ -10,6 +10,6 @@ export class NodeVisitor {
   }
 
   genericVisit(node: AST) {
-    return new Error(`NO visit_${typeof node} method`);
+    return new Error(`NO visit_${node.constructor.name} method`);
   }
 }

@@ -1,6 +1,6 @@
 import { Lexer } from "./lexer";
 import { TOKEN_TYPE, Token } from "../model/token";
-import { BinaryOp, Num } from "../model/binaryOperation";
+import { BinaryOp, Num, UnaryOp } from "../model/binaryOperation";
 import { AST } from "../model/ast";
 
 export class Parser {
@@ -18,8 +18,17 @@ export class Parser {
   }
 
   factor(): AST {
+   // factor : (PLUS | MINUS) factor | INTEGER | LPAREN expr RPAREN 
     const token = this.currentToken;
-    if (token.tokenType === TOKEN_TYPE.INTEGER) {
+    if(token.tokenType === TOKEN_TYPE.PLUS) {
+      this.eat(TOKEN_TYPE.PLUS);
+      const node = new UnaryOp(token, this.factor())
+      return node;
+    } else if (token.tokenType === TOKEN_TYPE.MINUS) {
+      this.eat(TOKEN_TYPE.MINUS);
+      const node = new UnaryOp(token, this.factor())
+      return node;
+    } else if (token.tokenType === TOKEN_TYPE.INTEGER) {
       this.eat(TOKEN_TYPE.INTEGER);
       return new Num(token);
     } else if (token.tokenType === TOKEN_TYPE.LPREN) {
@@ -49,7 +58,7 @@ export class Parser {
         this.eat(TOKEN_TYPE.DIV);
       }
 
-      node = new BinaryOp(node, token, this.factor());
+      node = new BinaryOp(node as BinaryOp, token, this.factor() as BinaryOp);
     }
 
     return node;
@@ -69,7 +78,7 @@ export class Parser {
         if(token.tokenType === TOKEN_TYPE.MINUS) {
           this.eat(TOKEN_TYPE.MINUS);
         }
-        node = new BinaryOp(node, token, this.term());
+        node = new BinaryOp(node as BinaryOp, token, this.factor() as BinaryOp);
     }
 
     return node;

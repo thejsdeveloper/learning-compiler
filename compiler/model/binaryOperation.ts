@@ -15,3 +15,7 @@ export class Num extends AST {
     this.value = parseFloat(this.token.value);
   }
 }
+
+export class UnaryOp extends AST {
+  constructor(public token: Token, public expr: any) { super(); }
+}

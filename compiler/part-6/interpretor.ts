@@ -1,7 +1,7 @@
 import { NodeVisitor } from "./node-visitor";
 import { Parser } from './parser';
 import { AST } from "../model/ast";
-import { BinaryOp, Num } from "../model/binaryOperation";
+import { BinaryOp, Num, UnaryOp } from "../model/binaryOperation";
 import { TOKEN_TYPE } from "../model/token";
 
 export class Interpreter extends NodeVisitor {
@@ -23,6 +23,15 @@ export class Interpreter extends NodeVisitor {
 
     visit_Num(node: Num) {
         return node.value;
+    }
+
+    visit_UnaryOp(node: UnaryOp) {
+        const tokenType = node.token.tokenType;
+        if(tokenType === TOKEN_TYPE.PLUS) {
+            return +this.visit(node.expr);
+        } else if (tokenType === TOKEN_TYPE.MINUS) {
+            return -this.visit(node.expr);
+        }
     }
 
     interpret() {
