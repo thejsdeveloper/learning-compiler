@@ -20,20 +20,26 @@ export class Parser {
   factor(): AST {
    // factor : (PLUS | MINUS) factor | INTEGER | LPAREN expr RPAREN 
     const token = this.currentToken;
+
     if(token.tokenType === TOKEN_TYPE.PLUS) {
       this.eat(TOKEN_TYPE.PLUS);
       const node = new UnaryOp(token, this.factor())
+      // console.log('node ', node)
       return node;
     } else if (token.tokenType === TOKEN_TYPE.MINUS) {
       this.eat(TOKEN_TYPE.MINUS);
       const node = new UnaryOp(token, this.factor())
+      //  console.log('node ', node)
       return node;
     } else if (token.tokenType === TOKEN_TYPE.INTEGER) {
       this.eat(TOKEN_TYPE.INTEGER);
-      return new Num(token);
+      const node = new Num(token);
+      //  console.log('node ', node)
+      return node
     } else if (token.tokenType === TOKEN_TYPE.LPREN) {
       this.eat(TOKEN_TYPE.LPREN);
       const node = this.expr();
+      // console.log('node ', node)
       this.eat(TOKEN_TYPE.RPREN);
       return node;
     }
@@ -58,7 +64,8 @@ export class Parser {
         this.eat(TOKEN_TYPE.DIV);
       }
 
-      node = new BinaryOp(node as BinaryOp, token, this.factor() as BinaryOp);
+      node = new BinaryOp(node, token, this.factor());
+      // console.log('term binary op node ', node)
     }
 
     return node;
@@ -78,7 +85,8 @@ export class Parser {
         if(token.tokenType === TOKEN_TYPE.MINUS) {
           this.eat(TOKEN_TYPE.MINUS);
         }
-        node = new BinaryOp(node as BinaryOp, token, this.factor() as BinaryOp);
+        node = new BinaryOp(node, token, this.term());
+        // console.log('expr binary op node ', node)
     }
 
     return node;
