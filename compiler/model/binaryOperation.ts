@@ -3,7 +3,7 @@ import { TOKEN_TYPE, Token } from "./token";
 
 
 export class BinaryOp extends AST {
-  constructor(public left: BinaryOp, public token: Token, public right: BinaryOp) {
+  constructor(public left: AST, public token: Token, public right: AST) {
     super();
   }
 }
